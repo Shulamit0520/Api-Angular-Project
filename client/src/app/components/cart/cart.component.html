@@ -1,0 +1,101 @@
+<p-toast></p-toast>
+<p-orderList [value]="cart" [listStyle]="{ 'max-height': '55vh'  }" header="סך הכל לתשלום: {{price}} שח"
+  currency="ILS" filterBy="name" filterPlaceholder=" ...חיפוש"  >
+  <ng-template let-item pTemplate="item">
+    <div class="flex flex-wrap p-2 align-items-center gap-3">     
+      <img class="border-round w-full" [src]="item.image" alt="{{ item.image }}" width="10" style="max-width: 100px;" />
+      <div class="flex-1 flex flex-column gap-2">
+        <span class="font-bold">{{ item.name }}</span>
+        <div class="flex align-items-center gap-2">
+          <i class="pi pi-tag text-sm"></i>
+          <span>{{ item.category }}</span>
+
+        </div>
+      </div>
+      <span class="font-bold text-900">{{ 'ש"ח ' + item.price }}</span>
+      <div>
+        <h3>[{{ item.quantity }}]</h3>
+      <p-button icon="pi pi-shopping-cart"  (onClick)="deleteOrder(item)">--</p-button>      
+</div>
+    </div>
+
+  </ng-template>
+
+</p-orderList>
+
+<p-button [disabled]="!cart " icon="pi pi-paypal" label="לתשלום" class="payment"
+  (click)="presentDialog = true"></p-button>
+
+<p-dialog [(visible)]="presentDialog" [style]="{ width: '450px', height: '800px' }" header="נא הכנס פרטי אשראי"
+  [modal]="true" styleClass="p-fluid">
+
+  <form [formGroup]="cartForm" (ngSubmit)="save()">
+    <!-- שדה מספר כרטיס אשראי -->
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-credit-card"></i>
+      </span>
+      <input pInputText maxlength="16" type="text" pKeyFilter="num" formControlName="creditCard"
+        placeholder="מספר כרטיס" />
+    </div>
+    <small *ngIf="cartForm.get('creditCard')?.hasError('required') && cartForm.get('creditCard')?.touched">
+      שדה חובה
+    </small>
+    <small *ngIf="cartForm.get('creditCard')?.hasError('pattern') && cartForm.get('creditCard')?.touched">
+      פורמט לא תקין (16 ספרות)
+    </small>
+    <br><br>
+
+    <!-- שדה תוקף -->
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-calendar"></i>
+      </span>
+      <input pInputText type="text" formControlName="validity" placeholder="תוקף (MM/YY)" />
+    </div>
+    <small *ngIf="cartForm.get('validity')?.hasError('required') && cartForm.get('validity')?.touched">
+      שדה חובה
+    </small>
+    <small *ngIf="cartForm.get('validity')?.hasError('pattern') && cartForm.get('validity')?.touched">
+      פורמט לא תקין (MM/YY)
+    </small>
+    <br><br>
+
+    <!-- שדה CVC -->
+    <div class="p-inputgroup">
+
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-pencil"></i>
+      </span>
+      <input pInputText maxlength="3" type="text" pKeyFilter="num" formControlName="cvc" placeholder="CVC" />
+    </div>
+    <small *ngIf="cartForm.get('cvc')?.hasError('required') && cartForm.get('cvc')?.touched">
+      שדה חובה
+    </small>
+    <small *ngIf="cartForm.get('cvc')?.hasError('pattern') && cartForm.get('cvc')?.touched">
+      פורמט לא תקין (3 ספרות)
+    </small>
+    <br><br>
+
+    <!-- שדה תעודת זהות -->
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-id-card"></i>
+      </span>
+      <input pInputText maxlength="9" type="text" pKeyFilter="num" formControlName="id" placeholder="תעודת זהות" />
+    </div>
+    <small *ngIf="cartForm.get('id')?.hasError('required') && cartForm.get('id')?.touched">
+      שדה חובה
+    </small>
+    <small *ngIf="cartForm.get('id')?.hasError('pattern') && cartForm.get('id')?.touched">
+      פורמט לא תקין (9 ספרות)
+    </small>
+    <br><br>
+    <!-- כפתורים -->
+    <div class="p-buttonset" style="display: flex; gap: 0.5vw;">
+      <button type="submit" [disabled]="cartForm.invalid" pButton pRipple label="Save" icon="pi pi-send"></button>
+      <button type="button" pButton pRipple label="Cancel" icon="pi pi-times" (click)="presentDialog = false"></button>
+    </div>
+  </form>
+
+</p-dialog>

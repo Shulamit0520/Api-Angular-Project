@@ -1,0 +1,31 @@
+<header style="display: flex;justify-content: center; align-items: center;margin: 4vw; flex-direction: column;">
+    <div class="card flex flex-row gap-3 align-items-center">
+        ידוע לי שלאחר עריכת ההגרלה לא ניתן יהיה לבצע שינויים ו/או עדכונים במערכת
+        <p-triStateCheckbox [(ngModel)]="value" variant="filled" inputId="tricheckbox" />
+    </div>
+    <h3> ₪ סך ההכנסות למכירה הוא : {{sum}} </h3>
+
+    <p-button severity="info" label="להורדת קובץ הזוכים" icon="pi pi-upload" (onClick)="downloadExcel()" class="mr-2;" />
+</header>
+
+<div class="card xl:flex xl:justify-content-center">
+    <p-orderList [value]="(presents$|async) || []" [listStyle]="{ 'max-height': '50vh' }" header="הגרלה "
+        filterBy="name" filterPlaceholder="חפש מתנה">
+        <ng-template let-present | async pTemplate="item">
+            <div class="flex flex-wrap p-2 align-items-center gap-3">
+                <img [src]="present.image" [alt]="present.image" class="w-4rem shadow-2 flex-shrink-0 border-round" />
+                <div class="flex-1 flex flex-column gap-2">
+                    <span class="font-bold">{{ present.name }}</span>
+                    <div *ngIf="present?.isRaffle" class="text-lg font-medium text-900 mt-2">
+                        <h4> {{ present.winner }} : הזוכה הוא </h4>
+                    </div>
+
+
+                    <p-button [disabled]="!value||present.isRaffle == true" severity="info" label="ערוך הגרלה"
+                        icon="pi pi-trophy" (onClick)="raffle(present.id)" class="mr-2;" />
+
+                </div>
+            </div>
+        </ng-template>
+    </p-orderList>
+</div>

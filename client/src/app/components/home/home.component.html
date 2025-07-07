@@ -1,0 +1,49 @@
+<p-menubar [model]="items">
+    <ng-template pTemplate="item" let-item>
+        <ng-container *ngIf="item.route; else urlRef">
+            <a [routerLink]="item.route" class="p-menuitem-link" style="display: flex;gap: 0.4vw;">
+                <span class="ml-2">{{ item.label }}</span>
+                <span [class]="item.icon " style="color:rgb(9, 137, 180)"></span>
+
+            </a>
+        </ng-container>
+        <ng-template #urlRef>
+            <a *ngIf="item.url; else noLink" [href]="item.url" class="p-menuitem-link"
+                style="display: flex;gap: 0.4vw; ">
+                <span class="ml-2">{{ item.label }}</span>
+                <span [class]="item.icon" style="color:rgb(9, 137, 180)"></span>
+
+            </a>
+        </ng-template>
+        <ng-template #urlRef>
+            <a *ngIf="item.url; else noLink" [href]="item.url" class="p-menuitem-link"
+                style="display: flex;gap: 0.4vw; ">
+                <span class="ml-2">{{ item.label }}</span>
+                <span [class]="item.icon" style="color:rgb(9, 137, 180)"></span>
+
+            </a>
+        </ng-template>
+        <ng-template #urlRef>
+            <a *ngIf="item.url; else noLink" [href]="item.url" class="p-menuitem-link"
+                style="display: flex;gap: 0.4vw; ">
+                <span class="ml-2">{{ item.label }}</span>
+                <span [class]="item.icon" style="color:rgb(9, 137, 180)"></span>
+
+            </a>
+        </ng-template>
+        <ng-template #noLink>
+            <div *ngIf="roles==='admin'" class="p-menuitem-link" style="display: flex;gap: 0.4vw;">
+                <span class="pi pi-fw pi-angle-down ml-2"></span>
+                <span class="ml-2">{{ item.label }}</span>
+                <span [class]="item.icon" style="color:rgb(203, 5, 137)"></span>
+            </div>
+
+        </ng-template>
+    </ng-template>
+</p-menubar>
+
+
+
+<div>
+  <router-outlet /> 
+</div>

@@ -1,0 +1,15 @@
+.aaa {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    padding: 0.8vw;
+    gap: 2vw;
+}
+
+.absolute {
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    margin-top: 1vw;
+    display: flex;
+
+}

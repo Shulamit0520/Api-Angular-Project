@@ -1,0 +1,102 @@
+<app-add-donor [donors$]="donors$" (sendDonors)="setDonors()"></app-add-donor>
+<app-edit-donor [donors$]="donors$" (sendDonors)="setDonors()" [donor]="donor" [donorEdit]="donorEdit"></app-edit-donor>
+<div class="card">
+
+
+    <p-toast />
+
+    <p-table #dt [value]="(donors$ | async) ||[]" [rows]="5" [paginator]="true" [tableStyle]="{ 'min-width': '75rem'}"
+        [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="caption">
+            <div class="flex aalign-items-center justify-content-between">
+                <span class="p-input-icon-left" style="display: flex; gap: 1vw;">
+
+                    <p-button severity="info" label="הוספה" icon="pi pi-plus" 
+                        (onClick)="openNew(1,donor)" />
+                        
+                        <div class="radio-group">
+                            <label class="radio-option">
+                              <input type="radio" [(ngModel)]="kind" value="name" id="name">
+                              <span class="radio-btn"></span>
+                              חיפוש לפי שם תורם
+                            </label>
+                          
+                            <label class="radio-option">
+                              <input type="radio" [(ngModel)]="kind" value="present" id="present">
+                              <span class="radio-btn"></span>
+                              חיפוש לפי שם מתנה
+                            </label>
+                          </div>
+                          
+
+                    <input pInputText type="text" placeholder="...חפש"[(ngModel)]="value" (input)="filter()"                   
+                    />
+                </span>
+            </div>
+        </ng-template> -
+        <ng-template pTemplate="header">
+            <tr>
+
+                <th pSortableColumn="name" style="min-width:10rem">
+                    שם <p-sortIcon field="name" />
+                </th>
+
+                <th pSortableColumn="phone">
+                    טלפון <p-sortIcon field="phone" />
+                </th>
+                <th pSortableColumn="phone">
+                    רשימת תרומות <p-sortIcon field="phone" />
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-donor |async>
+            <tr>
+
+                <td>
+                    {{ donor.name }}
+                </td>
+
+                <td>
+                    {{donor.phone}}
+                </td>
+                <td>
+                    <!-- <p-button  (onClick)="getPresentsDonor(donor.id)" class="">טען מתנות</p-button> -->
+                    <!-- <select *ngIf="f===donor.id" name="רשימת המתנות" id="">
+                      <option  *ngFor="let p of (presentsDonor$ | async)" [value]="p.name">
+                        {{ p.name }}
+                      </option>
+                    </select> -->
+                    <!-- <p-button  severity="success"  (onClick)="getPresentsDonor(donor.id)" class="">טען מתנות</p-button>
+                    <p-dropdown  
+                     *ngIf="f===donor.id" [options]="(presentsDonor$| async) || []" optionLabel="name"
+                    placeholder="רשימת המתנות"   required autofocus/> -->
+
+                    <p-button icon="pi pi-look" label="טען מתנות" [outlined]="true" severity="success"
+                        (onClick)="getPresentsDonor(donor.id)" />
+                    <p-dialog [(visible)]="presentDialog" [style]="{ width: '450px' }" header="רשימת מתנות"
+                        [modal]="true">
+                        <div *ngFor="let item of (presentsDonor$| async)">
+                            <h3> {{item.name}}</h3>
+                        </div>
+                    </p-dialog>
+
+                </td>
+                <td style="display: flex;gap: 0.7vw;">
+                    <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
+                        (onClick)="openNew(2,donor)" />
+                    <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true"
+                        (onClick)="deleteDonor(donor)" />
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                יש בסך הכל {{ donors$ ? (donors$ | async)?.length : 0 }} תורמים
+            </div>
+        </ng-template>
+    </p-table>
+
+
+    <p-confirmDialog [style]="{ width: '450px' }" />
+</div>

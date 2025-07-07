@@ -1,0 +1,164 @@
+<p-dialog [(visible)]="presentDialog" [style]="{ width: '450px',height:'800px'}" header="Present Details" [modal]="true"
+    styleClass="p-fluid">
+    <form [formGroup]="presentForm" (ngSubmit)="savePresent()">
+
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-gift"></i>
+            </span>
+            <input pInputText maxlength="50" type="text" formControlName="name" placeholder="שם מתנה"
+                [(ngModel)]="present.name" />
+        </div>
+
+        <small *ngIf="presentForm.get('name')?.hasError('required') && presentForm.get('name')?.touched">
+            שדה חובה
+        </small>
+        <small *ngIf="presentForm.get('name')?.hasError('minlength') && presentForm.get('name')?.touched">
+            לפחות 2 תווים
+        </small>
+
+        <br>
+
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-gift"></i>
+            </span>
+            <input pInputText maxlength="50" type="text" formControlName="details" placeholder="פרטי מתנה"
+                [(ngModel)]="present.details" />
+        </div>
+
+        <small *ngIf="presentForm.get('details')?.hasError('required') && presentForm.get('details')?.touched">
+            שדה חובה
+        </small>
+        <small *ngIf="presentForm.get('details')?.hasError('minlength') && presentForm.get('details')?.touched">
+            לפחות 2 תווים
+        </small>
+
+        <br>
+
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-dollar"></i>
+            </span>
+            <input pInputText type="number" min="10" max="150" formControlName="price" placeholder="מחיר "
+                [(ngModel)]="present.price" />
+        </div>
+
+        <small *ngIf="presentForm.get('price')?.hasError('required') && presentForm.get('price')?.touched">
+            שדה חובה
+        </small>
+        <small *ngIf="presentForm.get('phone')?.hasError('min') && presentForm.get('phone')?.touched">
+            מחיר כרטיס מינמלי 10 ש"ח
+        </small>
+        <br>
+
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-tags"></i>
+            </span>
+            <input pInputText maxlength="30" type="text" formControlName="category" placeholder="קטגוריה"
+                [(ngModel)]="present.category" />
+        </div>
+
+        <small *ngIf="presentForm.get('category')?.hasError('required') && presentForm.get('category')?.touched">
+            שדה חובה
+        </small>
+        <small *ngIf="presentForm.get('category')?.hasError('minlength') && presentForm.get('category')?.touched">
+            לפחות 2 תווים
+        </small>
+        <br>
+
+
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-image"></i>
+            </span>
+            <input pInputText type="text" formControlName="image" placeholder="תמונה" alt="present.image"
+                [(ngModel)]="present.image" />
+        </div>
+
+        <small *ngIf="presentForm.get('image')?.hasError('required') && presentForm.get('image')?.touched">
+            שדה חובה
+        </small>
+        <small *ngIf="presentForm.get('image')?.hasError('pattern') && presentForm.get('image')?.touched">
+            פורמט תמונה שגוי
+        </small>
+        <br>
+
+        <div class="field col">
+            <label for="donor">תורם*</label>
+                <p-dropdown
+                [options]="(donors$ | async) || []"
+                formControlName="donor"       
+                optionLabel="name"
+                [showClear]="true"
+                [editable]="true"
+                placeholder={{donorName}}
+                (onChange)="onDonorChange($event)"
+              ></p-dropdown>
+        </div>
+        <small *ngIf="presentForm.get('donor')?.hasError('required') && presentForm.get('donor')?.touched">
+            שדה חובה
+        </small>
+        <!-- כפתורים -->
+        <div class="p-buttonset" style="display: flex; gap: 0.5vw;">
+            <p-button label="ביטול" icon="pi pi-times" [text]="true" (onClick)="hideDialog()" />
+            <p-button label="שמירה"  icon="pi pi-check" [text]="true"
+                (onClick)="savePresent()" />
+        </div>
+    </form>
+
+    <!-- <ng-template pTemplate="content" [style]="{ width: '30',height:'10'}">
+        <img  [src]=present.image alt="present.image" class="block m-auto pb-3"
+            *ngIf="present.image" />
+
+        <div class="field">
+            <label for="name">שם</label>
+            <input type="text" pInputText id="name" [(ngModel)]="present.name" required autofocus />
+            <small class="p-error" *ngIf="submitted && !present.name">
+                זהו שדה חובה*
+            </small>
+        </div>
+
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="price">מחיר</label>
+                <p-inputNumber id="price" [(ngModel)]="present.price" required autofocus mode="currency" currency="ILS"
+                    locale="en-US" />
+                <small class="p-error" *ngIf="submitted && (present.price) == 0">
+                    מחיר מינימלי 10 ש"ח
+                </small>
+                <small class="p-error" *ngIf="submitted && !(present.price)">
+                    שדה חובה
+                </small>
+            </div>
+            <div class="field">
+                <label for="name">קטגוריה</label>
+                <input type="text" pInputText id="category" [(ngModel)]="present.category" required autofocus />
+                <small class="p-error" *ngIf="submitted && !present.category">
+                    זהו שדה חובה*
+                </small>
+            </div>
+
+            <div class="field col">
+                <label for="image">תמונה</label>
+                <input type="text" pInputText id="image" [(ngModel)]="present.image" autofocus />
+            </div>
+
+            <div class="field col">
+                <label for="donor">תורם</label>
+
+                <p-dropdown [options]="(donors$| async) || []" [(ngModel)]="donorSelected" optionLabel="name"
+                    [showClear]="true" [editable]="true" placeholder={{present.donorId}} required autofocus />
+                <small class="p-error" *ngIf="submitted && (!donorSelected && !present.donorId) ">
+                    זהו שדה חובה*
+                </small>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <p-button label="ביטול" icon="pi pi-times" [text]="true" (onClick)="hideDialog()" />
+        <p-button label="שמירה" icon="pi pi-check" [text]="true" (onClick)="savePresent()" />
+    </ng-template> -->
+</p-dialog>

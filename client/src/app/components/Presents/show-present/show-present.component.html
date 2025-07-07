@@ -1,0 +1,104 @@
+<p-dataView #dv [value]="filteredPresents|| []">
+    <ng-template pTemplate="header">
+        <div class="flex justify-content-end">
+            <p-dataViewLayoutOptions />
+        </div>
+    </ng-template>
+    <ng-template pTemplate="list" let-filteredPresents  >
+        <p-toast />
+        <div class="grid grid-nogutter">
+            <input
+            pInputText
+            type="text"
+            (input)="applyFilterGlobal($event)"
+            placeholder = "... חיפוש" />
+            <div class="col-12" *ngFor="let item of filteredPresents; let first = first"  class="col-12" >
+                <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3" 
+                    [ngClass]="{ 'border-top-1 surface-border': !first }">
+                    <div class="md:w-10rem relative">
+                        <img class="border-round w-full" [src]=item.image alt={{item.image}} width="40" 
+                            style="max-width: 300px;" />
+                            <!-- <p-image  class="border-round w-full"  
+                            [src]=item.image min-width="300px" [preview]="true" alt={{item.image}}/> -->
+
+                        <p-tag [value]="item.category" class="absolute" [style.left.px]="4" [style.top.px]="4" />
+                    </div>
+                    <div
+                        class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                        <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+                            <div>
+                                <div class="text-lg font-medium text-900 mt-2">{{ item.name }}</div>
+                                <div *ngIf="item?.isRaffle" class="text-lg font-medium text-900 mt-2">
+                                    <h2> {{ item.winner }} : הזוכה הוא </h2>
+                                  </div>
+                                  
+                            </div>
+                            <!-- <div class="surface-100 p-1" style="border-radius: 30px">
+                                <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2"
+                                    style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+                                    <i class="pi pi-star-fill text-yellow-500"></i>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="flex flex-column md:align-items-end gap-5">
+                            <span class="text-xl font-semibold text-900"> {{ item.price | currency : 'ILS' }}</span>
+                            <div class="flex flex-row-reverse md:flex-row gap-2">
+                                <p-button icon="pi pi-heart" [outlined]="true" />
+                                <p-button icon="pi pi-shopping-cart"  [disabled]="item.isRaffle==true"
+                                    class="flex-auto md:flex-initial white-space-nowrap" label="הוספה לסל"
+                                    (onClick)="AddToCart(item)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    //למה לרוץ על מוצרים ועגלות
+    <ng-template  pTemplate="grid">
+        <div class="grid grid-nogutter">
+            <p-toast />
+
+            <div class="col-7 sm:col-6 md:col-4 xl:col-6 p-2" style="width: 32vw;" *ngFor="let item of presents$|async">
+                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
+                    <div class="surface-50 flex justify-content-center border-round p-3">
+                        <div class="relative mx-auto">
+                            <img class="border-round w-full" [src]=item.image alt={{item.image}} width="40"
+                                style="max-width: 300px;" />
+                                <!-- <p-image  class="border-round w-full"  
+                                [src]=item.image min-width="300px" [preview]="true" alt={{item.image}}/> -->
+                            <p-tag [value]="item.category" class="absolute" [style.left.px]="4"
+                                [style.top.px]="4" />
+                        </div>
+                    </div>
+                    <div class="pt-4">
+                        <div class="flex flex-row justify-content-between align-items-start gap-2">
+                            <div>
+                                <div *ngIf="item?.isRaffle" class="text-lg font-medium text-900 mt-2">
+                                    <h2> {{ item.winner }} : הזוכה הוא </h2>
+                                  </div>
+                                <div class="text-lg font-medium text-900 mt-1">{{ item.name }}</div>
+                            </div>
+                            <!-- <div class="surface-100 p-1" style="border-radius: 30px">
+                                <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2"
+                                    style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+                                    <i class="pi pi-star-fill text-yellow-500"></i>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="flex flex-column gap-4 mt-4">
+                            <span class="text-2xl font-semibold">{{ item.price | currency : 'ILS' }}</span>
+                            <div class="flex gap-2">
+                                <p-button icon="pi pi-shopping-cart"  [disabled]="item.isRaffle==true"
+                                    class="flex-auto md:flex-initial white-space-nowrap" label="הוספה לסל"
+                                    (onClick)="AddToCart(item)" />
+                                <p-button icon="pi pi-heart" [outlined]="true" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-dataView>

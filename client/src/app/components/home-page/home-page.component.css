@@ -1,0 +1,25 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    background-color: rgb(9, 137, 180);
+}
+/* .BGImg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    display: block;
+    min-height: 85vh;
+    background-color: blanchedalmond;
+    background-image: url(../../../../public/a.jpg);
+    background-size: cover;
+} */
+button{
+    background-image: url(../../../../public/e.png);
+    background-size: cover;
+    width: 70vw;
+    height: 95vh;
+    border: none;
+    cursor: pointer;
+}

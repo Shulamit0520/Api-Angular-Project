@@ -1,0 +1,87 @@
+<form [formGroup]="registerForm">
+    <div class="input">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-user"></i>
+            </span>
+            <input [(ngModel)]="u.username" formControlName="username" pInputText placeholder="שם משתמש*" required
+                autofocus />
+        </div>
+        <small *ngIf="registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched">
+            שדה חובה*
+        </small>
+
+        <small *ngIf="registerForm.get('username')?.hasError('minlength') && registerForm.get('username')?.touched">
+            לפחות 3 תווים
+        </small>
+        <small *ngIf="registerForm.get('username')?.hasError('maxlength') && registerForm.get('username')?.touched">
+            עד 10 תווים
+        </small>
+        <br>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-eye-slash"></i>
+            </span>
+            <input placeholder="סיסמא*" type="password" [(ngModel)]="u.passward" pInputText maxlength="4" id="misparPelephone"
+                formControlName="password" />
+        </div>
+        <small *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
+            שדה חובה*
+        </small>
+
+        <small *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched">
+            סיסמא באורך 4 תווים
+        </small>
+        <br>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-at"></i>
+            </span>
+            <input [(ngModel)]="u.email" type="email" formControlName="email" required autofocus pInputText placeholder="מייל*" />
+        </div>
+        <small *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched">
+            שדה חובה*
+        </small>
+        <small *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched">
+            כתובת מייל לא תקינה
+        </small>
+        <br>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-tablet"></i>
+            </span>
+            <input placeholder="טלפון*" [(ngModel)]="u.phone" pInputText maxlength="10" type="text" pKeyFilter="num"
+                id="misparPelephone" formControlName="phone" />
+        </div>
+        <small *ngIf="registerForm.get('phone')?.hasError('required') && registerForm.get('phone')?.touched">
+            שדה חובה*
+        </small>
+        <small *ngIf="registerForm.get('phone')?.hasError('pattern') && registerForm.get('phone')?.touched">
+            טלפון לא תקין
+        </small>
+        <br>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-users"></i>
+            </span>
+            <input [(ngModel)]="u.fullName" formControlName="fullName" required autofocus pInputText type="text"
+                placeholder="שם מלא*" />
+        </div>
+        <small *ngIf="registerForm.get('fullName')?.hasError('required') && registerForm.get('fullName')?.touched">
+            שדה חובה*
+        </small>
+        <small *ngIf="registerForm.get('fullName')?.hasError('minlength') && registerForm.get('fullName')?.touched">
+            לפחות 5 תווים
+        </small>
+
+
+    </div>
+    <span class="p-buttonset">
+        <button [disabled]="registerForm.invalid" pButton pRipple label="הרשמה" icon="pi pi-send"
+            (click)="send()"></button>
+    </span>
+</form>
+
+
+
+<p-toast />

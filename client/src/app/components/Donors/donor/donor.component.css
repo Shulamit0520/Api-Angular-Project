@@ -1,0 +1,67 @@
+.btnAdd{
+    color: rgb(9, 137, 180) ;
+    background-color: rgb(17, 157, 204);
+    border-radius: 50%;
+}
+.a{
+    width: 10px;
+}
+/* עיצוב עבור ה-input */
+/* הסתרת ה-input הרגיל */
+input[type="radio"] {
+    display: none;
+  }
+  .radio-group{
+    display: flex;
+    flex-direction: column;
+    
+  }
+  /* עיצוב הלייבל ככפתור עם רדיוס יפה */
+  .radio-option {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-right: 20px;
+    cursor: pointer;
+
+  }
+  
+  /* יצירת המראה של הרדיו-בוטן */
+  .radio-option .radio-btn {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #007BFF;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: all 0.3s ease;
+  }
+  
+  /* מראה הרדיו-בוטן כשהוא נבחר */
+  input[type="radio"]:checked + .radio-btn {
+    background-color: #007BFF;
+    border-color: #007BFF;
+  }
+  
+  input[type="radio"]:checked + .radio-btn::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+  
+  /* חיבור ברירת המחדל (כשלא נבחר שום דבר) */
+  input[type="radio"]:not(:checked) + .radio-btn {
+    background-color: #fff;
+    border-color: #ccc;
+  }
+  

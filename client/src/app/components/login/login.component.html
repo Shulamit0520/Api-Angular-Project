@@ -1,0 +1,42 @@
+<p-toast />
+<form [formGroup]="loginForm">
+    <p-toast />
+
+    <div class="input">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-user"></i>
+            </span>
+
+            <input [(ngModel)]="username" formControlName="username" required autofocus pInputText
+                placeholder="שם משתמש*" />
+        </div>
+        <small *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
+            שדה חובה*
+        </small>
+        <small *ngIf="loginForm.get('username')?.hasError('minlength') && loginForm.get('username')?.touched">
+            שם משתמש לא תקין
+         </small>
+         <small *ngIf="loginForm.get('username')?.hasError('maxlength') && loginForm.get('username')?.touched">
+            שם משתמש לא תקין
+         </small>
+   
+        <br>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-eye-slash"></i>
+            </span>
+            <input [(ngModel)]="passward"  type="password" pInputText maxlength="4"  pKeyFilter="num" id="misparPelephone"
+                formControlName="password" placeholder="סיסמא*" />
+        </div>
+        <small *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+            שדה חובה*
+        </small>
+        <small *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched">
+            סיסמא לא תקינה
+        </small>
+    </div>
+    <span class="p-buttonset">
+        <button  pButton pRipple label="כניסה" icon="pi pi-send" [disabled]="loginForm.invalid"
+            (click)="send()"></button>
+    </span>

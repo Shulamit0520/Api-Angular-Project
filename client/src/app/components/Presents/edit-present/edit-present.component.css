@@ -1,0 +1,15 @@
+small {
+    color: red;
+    margin-left: 10px !important;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.select {
+    margin-right: 25vw;
+}

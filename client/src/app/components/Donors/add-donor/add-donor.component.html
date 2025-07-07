@@ -1,0 +1,50 @@
+<p-dialog [(visible)]="donorDialog" [style]="{ width: '450px' }" header="פרטי תורם" [modal]="true" styleClass="p-fluid">
+
+
+    <form [formGroup]="donorForm" (ngSubmit)="saveDonor()">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-users"></i>
+            </span>
+
+            <input pInputText maxlength="30" type="text" formControlName="name" placeholder="שם מלא"
+                [(ngModel)]="donor.name" />
+        </div>
+
+        <small *ngIf="donorForm.get('name')?.hasError('required') && donorForm.get('name')?.touched">
+            שדה חובה
+        </small>
+        <small *ngIf="donorForm.get('name')?.hasError('minlength') && donorForm.get('name')?.touched">
+            לפחות 3 תווים
+        </small>
+        <small *ngIf="donorForm.get('name')?.hasError('maxlength') && donorForm.get('name')?.touched">
+            מקסימום 30 תווים
+        </small>
+
+        <br><br>
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+          <i class="pi pi-phone"></i>
+        </span>
+
+            <input pInputText maxlength="10" formControlName="phone" placeholder="טלפון " [(ngModel)]="donor.phone" />
+        </div>
+
+        <small *ngIf="donorForm.get('phone')?.hasError('required') && donorForm.get('phone')?.touched">
+            שדה חובה
+        </small>
+        <small *ngIf="donorForm.get('phone')?.hasError('pattern') && donorForm.get('phone')?.touched">
+            טלפון לא תקין
+        </small>
+        <br><br>
+
+
+
+        <!-- כפתורים -->
+        <div class="p-buttonset" style="display: flex; gap: 0.5vw;">
+            <p-button label="ביטול" icon="pi pi-times" [text]="true" (onClick)="hideDialog()" />
+            <p-button label="שמירה" [disabled]="donorForm.invalid" icon="pi pi-check" [text]="true"
+                (onClick)="saveDonor()" />
+        </div>
+    </form>
+</p-dialog>

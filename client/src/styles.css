@@ -1,0 +1,19 @@
+@import "primeicons/primeicons.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+
+#bb{
+    background-color: rgb(79, 79, 224);
+    border-color: rgb(79, 79, 224);
+  }
+#bl{
+  background-color: aqua;
+  border-color: aqua;
+}
+#bv{
+  background-color: darkcyan;
+  border-color:darkcyan;
+}
+

@@ -1,0 +1,15 @@
+.fixed-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* התפריט יתפרס על כל רוחב המסך */
+    z-index: 1000; /* ודא שהתפריט נמצא מעל כל האלמנטים האחרים */
+    background-color: #fff; /* צבע רקע כדי להבדיל אותו מהתוכן */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* הצללה כדי להפריד מהתוכן */
+  }
+
+  .content {
+    margin-top: 60px; /* מרווח בהתאם לגובה התפריט */
+    /* padding: 20px; */
+  }
+  
